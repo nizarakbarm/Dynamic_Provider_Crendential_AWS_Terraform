@@ -33,3 +33,22 @@ resource "aws_iam_role" "oidc_role" {
     )
     depends_on = [ aws_iam_openid_connect_provider.terraform_cloud_oidc ]
 }
+
+resource "aws_iam_role_policy" "LearnEKS_policy" {
+    name = "LearnEKS-policy"
+    role = aws_iam_role.oidc_role.id
+    
+    policy = jsondecode(
+        {
+            Version = "2012-10-17"
+            Action = [
+                "eks:*",
+                "ec2:*",
+                "iam:*"
+            ]
+            Effect = "Allow"
+            REsource = "*"
+        },
+    )
+    depends_on = [ aws_iam_role.oidc_role ]
+}
