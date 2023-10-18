@@ -45,7 +45,7 @@ resource "aws_iam_role_policy" "oidc_policy_one" {
             Version = "2012-10-17"
             Statement = [
                 {
-                    Action = [ "eks:*", "ec2:*", "iam:*", "kms:*", "logs:*"]
+                    Action = [ "eks:*", "ec2:*", "iam:*", "kms:*", "logs:*", "sts:AssumeRole", "sts:TagSession"]
                     Effect = "Allow"
                     Resource = "*"
                 },
