@@ -43,13 +43,14 @@ resource "aws_iam_role_policy" "oidc_policy_one" {
             Version = "2012-10-17"
             Statement = [
                 {
-                    Action = ["eks:*", "ec2:*", "iam:*"]
+                    Action = [ "eks:*", "ec2:*", "iam:*"]
                     Effect = "Allow"
-                    REsource = "*"
+                    Resource = "*"
                 },
             ]
-        },
+        }
     )
+    depends_on = [ aws_iam_role.oidc_role ]
 }
 output "oidc_role_arn" {
   value = aws_iam_role.oidc_role.arn
