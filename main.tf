@@ -20,13 +20,15 @@ resource "aws_iam_role" "oidc_role" {
                     Principal = {
                         Federated = resource.aws_iam_openid_connect_provider.terraform_cloud_oidc.arn
                     }
-                    Action = "sts:AssumeRoleWithWebIdentity"
+                    Action = [
+			"sts:AssumeRoleWithWebIdentity",
+		    ]
                     Condition = {
                         StringEquals = {
                             "${var.terraform_cloud_address}:aud" = resource.aws_iam_openid_connect_provider.terraform_cloud_oidc.client_id_list
                         },
                         StringLike = {
-                            "${var.terraform_cloud_address}:sub" = "organization:findnull:project:*:workspace:LearnEKSTerraform:run_phase:*"
+                            "${var.terraform_cloud_address}:sub" = "organization:findnull:project:*:workspace:*:run_phase:*"
                         }
                     } 
                 },
